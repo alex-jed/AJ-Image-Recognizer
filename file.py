@@ -1,3 +1,5 @@
+import csv
+
 import numpy as np
 import os
 from PIL import Image
@@ -39,4 +41,14 @@ def output_grayscale_image(grayscale_matrix):
     plt.imshow(grayscale_matrix, cmap='gray', interpolation='nearest')
     plt.title("Grayscale Matrix")
     plt.show()
-    
+
+def write_heatmap(heatmap, filename):
+    """
+    Writes an n x n grid of numbers to a CSV file.
+    """
+
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        for row in heatmap:
+            writer.writerow(row)
+
