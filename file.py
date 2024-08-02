@@ -80,19 +80,6 @@ def reset_heatmap(image, filename):
     write_heatmap(grid, filename)
 
 
-def standardize_heatmap(heatmap):
-    min_value = np.min(heatmap)
-    max_value = np.max(heatmap)
-    if abs(min_value) > abs(max_value):
-        divider = abs(min_value) / 255
-    else:
-        divider = abs(max_value) / 255
-
-    heatmap = heatmap / divider
-
-    return heatmap
-
-
 def display_rbg_image(rbg_matrix):
     plt.imshow(rbg_matrix)
     plt.title("RGB Matrix")
