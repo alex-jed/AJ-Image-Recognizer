@@ -52,3 +52,18 @@ def write_heatmap(heatmap, filename):
         for row in heatmap:
             writer.writerow(row)
 
+
+def read_heatmap(filename):
+    """
+    Reads a CSV file and saves it as a 2D array.
+   """
+
+    filename = filename + " heatmap"
+
+    grid = []
+    with open(filename, mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            grid.append([int(value) if value.isdigit() else float(value) for value in row])
+
+    return np.array(grid)
