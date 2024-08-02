@@ -4,6 +4,7 @@ from PIL import Image
 
 print("READS/WRITES FILES")
 
+
 def get_image(image_filename):
 
     """
@@ -18,3 +19,12 @@ def get_image(image_filename):
         rgb_matrix = np.array(img)
 
     return rgb_matrix
+
+
+def rgb_to_grayscale(rgb_matrix):
+    """
+    Converts an n x n grid of RGB values to a grayscale n x n grid.
+   """
+    grayscale_matrix = np.dot(rgb_matrix[..., :3], [0.2989, 0.5870, 0.1140])
+
+    return grayscale_matrix
