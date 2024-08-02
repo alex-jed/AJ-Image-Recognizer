@@ -3,6 +3,22 @@ import file
 
 print("WELCOME TO THE IMAGE RECOGNIZER")
 
+def shrink_image(image, a):
+    n, m = image.shape
+
+    # Calculate the step size for downsampling
+    row_step = n / a
+    col_step = m / a
+
+    # Generate the indices to keep
+    row_indices = [int(i * row_step) for i in range(a)]
+    col_indices = [int(j * col_step) for j in range(a)]
+
+    # Use the indices to downsample the image
+    shrunk_image = image[np.ix_(row_indices, col_indices)]
+
+    return shrunk_image
+
 def train_ai(target):
     # reorders to begin training
     trainable_characters = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
