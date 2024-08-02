@@ -121,3 +121,6 @@ def find_text(whole_matrix):
             # saves found row
             stored_character_matrices.append(row_of_single_characters)
     return stored_character_matrices
+
+
+
