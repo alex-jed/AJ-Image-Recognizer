@@ -67,3 +67,14 @@ def read_heatmap(filename):
             grid.append([int(value) if value.isdigit() else float(value) for value in row])
 
     return np.array(grid)
+
+
+def reset_heatmap(image, filename):
+    grid = []
+    for i in range(image):
+        new_line = []
+        for j in range(image):
+            new_line.append(0)
+        grid.append(new_line)
+
+    write_heatmap(grid, filename)
