@@ -33,7 +33,7 @@ def rgb_to_grayscale(rgb_matrix):
     return grayscale_matrix
 
 
-def output_grayscale_image(grayscale_matrix):
+def display_grayscale_image(grayscale_matrix):
     """
     Creates a tkinter window displaying an n x n grid of grayscale values.
     """
@@ -91,3 +91,10 @@ def standardize_heatmap(heatmap):
     heatmap = heatmap / divider
 
     return heatmap
+
+
+def display_rbg_image(rbg_matrix):
+    plt.imshow(rbg_matrix)
+    plt.title("RGB Matrix")
+    plt.axis('off')
+    plt.show()
