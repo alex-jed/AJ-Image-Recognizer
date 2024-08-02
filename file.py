@@ -1,6 +1,7 @@
 import numpy as np
 import os
 from PIL import Image
+import matplotlib.pyplot as plt
 
 print("READS/WRITES FILES")
 
@@ -28,3 +29,14 @@ def rgb_to_grayscale(rgb_matrix):
     grayscale_matrix = np.dot(rgb_matrix[..., :3], [0.2989, 0.5870, 0.1140])
 
     return grayscale_matrix
+
+
+def output_grayscale_image(grayscale_matrix):
+    """
+    Creates a tkinter window displaying an n x n grid of grayscale values.
+    """
+
+    plt.imshow(grayscale_matrix, cmap='gray', interpolation='nearest')
+    plt.title("Grayscale Matrix")
+    plt.show()
+    
