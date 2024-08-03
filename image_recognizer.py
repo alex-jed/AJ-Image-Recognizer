@@ -83,4 +83,37 @@ def train_ai(target):
                 not_and_wrong) == 0:
             cont = False
 
+def image_recogniser(greyscale_matrix):
+    testable_characters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    # shrinks the matrix to match the 32x32 format
+    greyscale_matrix = shrink_image(greyscale_matrix, 32)
+
+    # generates the certainties for each character
+    scores = []
+    for number in testable_characters:
+        heatmap = file.read_heatmap(number)
+        total = 0
+        for i in range(32):
+            for j in range(32):
+                total += greyscale_matrix[i, j] * heatmap[i, j]
+        scores.append(total)
+
+    # for count in range(10):
+    #     print(f"{testable_numbers[count]}: ", scores[count])
+
+    print(f"IR3.0 thinks this is a {testable_characters[np.argmax(scores)]}")
+
+    # corrects heatmap is guess is wrong
+    correct = input("Is this correct? (y/n): ")
+    if correct != "y":
+        actual = input("What is it actually?: ")
+        actual_heatmap = file.read_heatmap(actual)
+        actual_heatmap += (len(testable_characters) - 1) * greyscale_matrix * np.ones((32, 32))
+        file.write_heatmap(actual_heatmap, str(actual) + " heatmap")
+        image_recogniser(greyscale_matrix)
+
+    # returns guessed character if correct
+    if correct == "y":
+        return testable_characters[np.argmax(scores)]
 
