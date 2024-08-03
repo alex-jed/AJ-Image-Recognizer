@@ -58,7 +58,7 @@ def read_heatmap(filename):
     Reads a CSV file and saves it as a 2D array.
    """
 
-    filename = filename + " heatmap"
+    filename = str(filename) + " heatmap"
 
     grid = []
     with open(filename, mode='r') as file:

@@ -2,7 +2,14 @@ import file
 import image_locator
 import image_recognizer
 
-file.display_rbg_image(file.get_image("big image"))
+#file.display_rbg_image(file.get_image("download test"))
+
+for i in range(10):
+    image_recognizer.train_ai(i)
+    file.display_rbg_image(file.read_heatmap(str(i)))
+    print("done")
+
+
 
 greyscale_matrix = file.rgb_to_grayscale(file.get_image("big image"))
 matricies = image_locator.find_text(greyscale_matrix)
