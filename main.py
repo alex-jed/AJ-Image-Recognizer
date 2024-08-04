@@ -3,24 +3,19 @@ import image_locator
 import image_recognizer
 import numpy as np
 
-#file.display_rbg_image(file.get_image("download test"))
 
-
+# file.display_rbg_image(file.get_image("download test"))
 
 
 def user_interface():
-
     testable_characters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 
     full_greyscale_matrix = file.rgb_to_grayscale(file.get_image("big image"))
 
-    characters_to_guess = image_locator.find_text(full_greyscale_matrix)
+    characters_to_guess = image_locator.find_text(full_greyscale_matrix, 0.01)
     # for i in range(len(characters_to_guess)):
     #     for j in range(len(characters_to_guess[i])):
     #         file.display_grayscale_image(characters_to_guess[i][j])
-
-
 
     final_text = []
     for count_i in range(len(characters_to_guess)):
@@ -50,8 +45,9 @@ def user_interface():
                     correct = True
         final_text.append(row)
     return final_text
-written_text = user_interface()
 
+
+written_text = user_interface()
 
 # greyscale_matrix = file.rgb_to_grayscale(file.get_image("big image"))
 # matricies = image_locator.find_text(greyscale_matrix)

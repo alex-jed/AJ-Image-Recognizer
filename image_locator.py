@@ -1,6 +1,7 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-def find_text(whole_matrix):
+def find_text(whole_matrix, tolerance):
     # once image has been located, is stored here
     stored_character_matrices = []
 
@@ -16,23 +17,30 @@ def find_text(whole_matrix):
     for count in range(len(whole_matrix_row_sums)):
         distance_from_max_whole_row_sums.append((max_row_value - whole_matrix_row_sums[count]) / max_row_value)
 
+    # plt.plot(distance_from_max_whole_row_sums, label="row sum")
+    # plt.legend()
+    # plt.show()
+
     # checks where new row of written text starts
     nr_of_edges_of_row_of_written_text = 0
     for i in range(len(distance_from_max_whole_row_sums)):
 
         row_of_single_characters = []  # stores final matrix once image has been found
 
-        if distance_from_max_whole_row_sums[i] >= 0.05 and nr_of_edges_of_row_of_written_text == 0:
+        if distance_from_max_whole_row_sums[i] >= tolerance and nr_of_edges_of_row_of_written_text == 0:
             top_edge_of_row_of_written_text = i
             nr_of_edges_of_row_of_written_text += 1
 
-        if distance_from_max_whole_row_sums[i] < 0.05 and nr_of_edges_of_row_of_written_text == 1:
+        if distance_from_max_whole_row_sums[i] < tolerance and nr_of_edges_of_row_of_written_text == 1:
             bottom_edge_of_row_of_written_text = i
             nr_of_edges_of_row_of_written_text += 1
 
         # scans for individual numbers in that row once row of written
         # text has been found
         if nr_of_edges_of_row_of_written_text == 2:
+
+            print("ROW STARTS AT", top_edge_of_row_of_written_text, "AND ENDS AT", bottom_edge_of_row_of_written_text)
+            print()
 
             # resets number of edges to begin looking for new row of written text
             nr_of_edges_of_row_of_written_text = 0
@@ -55,18 +63,25 @@ def find_text(whole_matrix):
             for count in range(len(col_sums)):
                 new_col_sums.append((max_col_value - col_sums[count]) / max_col_value)
 
+            # plt.plot(new_col_sums, label="column sum")
+            # plt.legend()
+            # plt.show()
+
             # scans for individual character in the isolated row
             for j in range(len(new_col_sums)):
-                if new_col_sums[j] >= 0.05 and nr_of_sides_of_characters == 0:
+                if new_col_sums[j] >= tolerance and nr_of_sides_of_characters == 0:
                     character_left_edge = j
                     nr_of_sides_of_characters += 1
 
-                if new_col_sums[j] < 0.05 and nr_of_sides_of_characters == 1:
+                if new_col_sums[j] < tolerance and nr_of_sides_of_characters == 1:
                     character_right_edge = j
                     nr_of_sides_of_characters += 1
 
                 # trims the blank spaces of the isolated characters
                 if nr_of_sides_of_characters == 2:
+
+                    print("CHARACTER STARTS AT", character_left_edge, "AND ENDS AT", character_right_edge)
+                    print()
 
                     # resets nr_of_sides_of_characters to begin looking for new character
                     nr_of_sides_of_characters = 0
@@ -87,25 +102,29 @@ def find_text(whole_matrix):
                     max_row_value_single_number = np.max(single_number_matrix_row_sums)
                     normalized_single_number_row_sums = []
                     for count in range(len(single_number_matrix_row_sums)):
-                        normalized_single_number_row_sums.append((max_row_value_single_number -
-                                                                  single_number_matrix_row_sums[
+                        normalized_single_number_row_sums.append((max_row_value_single_number - single_number_matrix_row_sums[count]) / max_row_value_single_number)
 
+                    # plt.plot(normalized_single_number_row_sums, label="column sum")
+                    # plt.legend()
+                    # plt.show()
 
-                                                                      count]) / max_row_value_single_number)
                     # checks exactly where the character is
                     nr_of_single_character_sides = 0
                     for k in range(len(normalized_single_number_row_sums)):
 
-                        if normalized_single_number_row_sums[k] >= 0.01 and nr_of_single_character_sides == 0:
+                        if normalized_single_number_row_sums[k] >= tolerance and nr_of_single_character_sides == 0:
                             single_number_top = k
                             nr_of_single_character_sides += 1
 
-                        if (normalized_single_number_row_sums[k] < 0.01 and nr_of_single_character_sides == 1) or (k == (np.shape(single_number_matrix)[0] - 1)):
+                        if (normalized_single_number_row_sums[k] < tolerance and nr_of_single_character_sides == 1) or (k == (np.shape(single_number_matrix)[0] - 1)):
                             single_number_bottom = k
                             nr_of_single_character_sides += 1
 
                         # trims the fat blank lines of the single numbers
                         if nr_of_single_character_sides == 2:
+                            print("BLANKS STARTS AT", single_number_top, "AND ENDS AT", single_number_bottom)
+                            print()
+
                             # resets number of edges to begin looking again
                             nr_of_single_character_sides = 0
 
@@ -116,7 +135,11 @@ def find_text(whole_matrix):
                             row_of_single_characters.append(trimmed_single_number_matrix)
 
             # saves found row
+
             stored_character_matrices.append(row_of_single_characters)
+            print()
+            print()
+            print()
     return stored_character_matrices
 
 
