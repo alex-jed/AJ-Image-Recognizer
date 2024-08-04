@@ -9,12 +9,11 @@ import numpy as np
 
 
 def user_interface():
-    file.get_image("big image")
+
     testable_characters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
     full_greyscale_matrix = file.rgb_to_grayscale(file.get_image("big image"))
-    #file.display_grayscale_image(full_greyscale_matrix)
 
     characters_to_guess = image_locator.find_text(full_greyscale_matrix)
     # for i in range(len(characters_to_guess)):
@@ -27,24 +26,28 @@ def user_interface():
     for count_i in range(len(characters_to_guess)):
         row = []
         for count_j in range(len(characters_to_guess[count_i])):
-            guess = image_recognizer.image_recogniser(file.get_image("big image"))
-            file.display_grayscale_image(characters_to_guess[count_i][count_j])
-            shrunk_greyscale_matrix = image_recognizer.shrink_image(full_greyscale_matrix[count_i][count_j], 32)
-
+            guess = image_recognizer.image_recogniser(characters_to_guess[count_i][count_j])
+            shrunk_greyscale_matrix = image_recognizer.shrink_image(characters_to_guess[count_i][count_j], 32)
+            file.display_grayscale_image(shrunk_greyscale_matrix)
             print(f"The Image Recognizer thinks this is a {guess}")
 
             # corrects heatmap is guess is wrong
-            correct = input("Is this correct? (y/n): ")
-            if correct != "y":
-                actual = input("What is it actually?: ")
-                actual_heatmap = file.read_heatmap(actual)
-                actual_heatmap += (len(testable_characters) - 1) * shrunk_greyscale_matrix * np.ones((32, 32))
-                file.write_heatmap(actual_heatmap, str(actual) + " heatmap")
-                image_recognizer.image_recogniser(shrunk_greyscale_matrix)
+            correct = False
+            while not correct:
+                user_answer = input("Is this correct? (y/n): ")
+                if user_answer != "y":
+                    actual = input("What is it actually?: ")
+                    actual_heatmap = file.read_heatmap(actual)
+                    actual_heatmap += (len(testable_characters) - 1) * shrunk_greyscale_matrix * np.ones((32, 32))
+                    file.write_heatmap(actual_heatmap, str(actual) + " heatmap")
 
-            # returns guessed character if correct
-            if correct == "y":
-                row.append(guess)
+                    new_guess = image_recognizer.image_recogniser(characters_to_guess[count_i][count_j])
+                    file.display_grayscale_image(shrunk_greyscale_matrix)
+                    print(f"The Image Recognizer thinks this is a {new_guess}")
+                # returns guessed character if correct
+                if user_answer == "y":
+                    row.append(guess)
+                    correct = True
         final_text.append(row)
     return final_text
 written_text = user_interface()

@@ -1,8 +1,5 @@
 import numpy as np
 
-print("THIS IS THE LOCATOR")
-
-
 def find_text(whole_matrix):
     # once image has been located, is stored here
     stored_character_matrices = []

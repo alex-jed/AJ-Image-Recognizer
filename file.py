@@ -5,9 +5,6 @@ import os
 from PIL import Image
 import matplotlib.pyplot as plt
 
-print("READS/WRITES FILES")
-
-
 def get_image(image_filename):
 
     """

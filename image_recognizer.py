@@ -1,12 +1,11 @@
 import numpy as np
 import file
 
-print("WELCOME TO THE IMAGE RECOGNIZER")
-
 def shrink_image(image, a):
-    print(image.shape)
+
+    #file.display_grayscale_image(image)
     n, m = image.shape
-    print(n, m)
+
     # Calculate the step size for downsampling
     row_step = n / a
     col_step = m / a
@@ -88,7 +87,7 @@ def image_recogniser(image):
     testable_characters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     # shrinks the matrix to match the 32x32 format
-    greyscale_matrix = shrink_image(file.rgb_to_grayscale(image), 32)
+    greyscale_matrix = shrink_image(image, 32)
 
     # generates the certainties for each character
     scores = []
