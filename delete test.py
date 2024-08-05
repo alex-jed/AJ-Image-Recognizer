@@ -1,32 +1,32 @@
-import numpy as np
-import matplotlib.pyplot as plt
+checks_for_blank_spaces = [33, 170, 216, 320, 368, 479, 1251, 1336, 1384, 1510]
 
-# Set the size of the matrix (n rows and m columns)
-n, m = 10, 5  # Example: 10 rows and 5 columns
-
-# Create a random matrix with values between 0 and 1
-A = np.random.rand(n, m)
-
-for i in A: print(i)
+row_of_single_characters = [5,4,2,0,1]
+avg_letter_size = 100
 
 
-# Create a figure for plotting
-plt.figure(figsize=(10, 6))
+# adds blank spaces
+row_of_single_characters_with_spaces = []
+adder = 0
 
-# Plot each column of the matrix
-for i in range(A.shape[1]):
-    plt.plot(A[:, i], label=f'Column {i+1}')
+# checks for blanks spaces at the start of the row of written characters
+if checks_for_blank_spaces[0] > avg_letter_size:
+    for count in range(checks_for_blank_spaces[0]//avg_letter_size):
+        row_of_single_characters_with_spaces.append("")
+row_of_single_characters_with_spaces.append(row_of_single_characters[adder])
+adder+=1
 
-# Add labels and title
-plt.xlabel('Row Index')
-plt.ylabel('Value')
-plt.title('Plot of Each Column in the Matrix')
+# checks for blank spaces between the rest of the characters
+for side in range(1, len(checks_for_blank_spaces)-1, 2):
+    if checks_for_blank_spaces[side + 1] - checks_for_blank_spaces[side] > avg_letter_size:
+        for count in range((checks_for_blank_spaces[side + 1] - checks_for_blank_spaces[side])//avg_letter_size):
+            row_of_single_characters_with_spaces.append("")
+    row_of_single_characters_with_spaces.append(row_of_single_characters[adder])
+    adder += 1
 
-# Add a legend to the plot
-plt.legend()
+# checks for blank spaces at the end of the row of written characters
+if 2214 - checks_for_blank_spaces[-1] > avg_letter_size:
+    print(f"{(2214 - checks_for_blank_spaces[-1])//avg_letter_size} SPACES AT THE END")
+    for count in range((2214 - checks_for_blank_spaces[-1])//avg_letter_size):
+        row_of_single_characters_with_spaces.append("")
 
-# Add a grid for better readability
-plt.grid(True)
-
-# Display the plot
-plt.show()
+print(row_of_single_characters_with_spaces)
