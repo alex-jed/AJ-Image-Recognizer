@@ -100,9 +100,10 @@ def image_recogniser(image):
         scores.append(total)
 
     # for count in range(10):
-    #     print(f"{testable_numbers[count]}: ", scores[count])
+    #     print(f"{testable_characters[count]}: ", scores[count])
 
-    #file.display_grayscale_image(greyscale_matrix)
+
+    print()
     return testable_characters[np.argmax(scores)]
 
 

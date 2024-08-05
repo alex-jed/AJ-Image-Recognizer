@@ -48,6 +48,7 @@ def write_heatmap(heatmap, filename):
         writer = csv.writer(file)
         for row in heatmap:
             writer.writerow(row)
+    print("HEATMAP UPDATED")
 
 
 def read_heatmap(filename):
